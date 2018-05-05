@@ -1,0 +1,11 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+target
+
+### JS ###
+node_modules
+package-lock.json
+
