@@ -47,11 +47,8 @@ public class BookController {
         return request.getHeader("authorization");
     }
 
-    @RequestMapping(value="/trade/id", method = RequestMethod.GET.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value="/trade/id", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void tradeBook(@RequestBody Map<String,String>body) {
-
-        //System.out.println("trade book " + body.get("id") + body.get("borrower"));
-
         this.bookDao.tradeBook(body.get("id"),body.get("borrower"));
     }
 }

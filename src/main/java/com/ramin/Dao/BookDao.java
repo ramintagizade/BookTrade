@@ -1,6 +1,5 @@
 package com.ramin.Dao;
 
-import com.mongodb.BasicDBObject;
 import com.ramin.Entity.Book;
 import com.ramin.Entity.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.*;
 
 @Component
 public class BookDao implements CommandLineRunner {
+
 
 
     @Autowired
@@ -26,11 +25,11 @@ public class BookDao implements CommandLineRunner {
     }
 
     public Optional<Book> getBookById(String id) {
-        return bookRepository.findById(id);
+        return this.bookRepository.findById(id);
     }
 
     public Collection<Book> getAllBooks() {
-        return bookRepository.findAll();
+        return this.bookRepository.findAll();
     }
 
     public Collection<Book> getMyBooks(String owner) {
@@ -42,10 +41,16 @@ public class BookDao implements CommandLineRunner {
     public void removeBookById(String id) {
         // Owner can delete
         // check if owner has the right
-        bookRepository.deleteById(id);
+        this.bookRepository.deleteById(id);
     }
 
     public void tradeBook(String id, String borrower) {
-        //
+        Optional<Book> myBook =  this.getBookById(id);
+        myBook.get().setOwner(borrower);
+        this.updateBook(myBook.get());
+    }
+
+    public void updateBook(Book book) {
+        this.bookRepository.save(book);
     }
 }
