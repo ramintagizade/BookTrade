@@ -4,22 +4,22 @@ import java.util.List;
 
 public class UserRequest {
 
-    private String name;
+    private String email;
     private List<TradeRequest> from;
     private List<TradeRequest> to;
 
-    public UserRequest(String name, List <TradeRequest> from , List<TradeRequest> to) {
-        this.name = name;
+    public UserRequest(String email, List <TradeRequest> from , List<TradeRequest> to) {
+        this.email = email;
         this.from = from;
         this.to = to;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.email = email;
     }
 
     public List<TradeRequest> getFrom() {

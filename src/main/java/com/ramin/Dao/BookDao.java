@@ -24,6 +24,10 @@ public class BookDao implements CommandLineRunner {
         System.out.println(bookRepository.findAll().toString());
     }
 
+    public void insertBook(Book book) {
+        this.bookRepository.insert(book);
+    }
+
     public Optional<Book> getBookById(String id) {
         return this.bookRepository.findById(id);
     }
@@ -53,4 +57,6 @@ public class BookDao implements CommandLineRunner {
     public void updateBook(Book book) {
         this.bookRepository.save(book);
     }
+
+
 }
