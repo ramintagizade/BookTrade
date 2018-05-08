@@ -11,11 +11,31 @@ public class TradeRequest {
     private String id;
     private String user;
     private String bookId;
+    private Boolean accepted;
+    private Boolean rejected;
 
     public TradeRequest(String user, String bookId ) {
         this.user = user;
         this.bookId = bookId;
         this.id = UUID.randomUUID().toString();
+        this.accepted = false;
+        this.rejected = false;
+    }
+
+    public Boolean getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public Boolean getRejected() {
+        return rejected;
+    }
+
+    public void setRejected(Boolean rejected) {
+        this.rejected = rejected;
     }
 
     public String getId() {

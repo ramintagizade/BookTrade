@@ -34,13 +34,8 @@ public class TradeRequestDao extends UserRequestDao implements CommandLineRunner
         Optional<UserRequest> userRequestSender = getUserRequests(tradeRequest.getUser());
         Optional<UserRequest> userRequestReceiver = getUserRequests(getBookOwnerById(tradeRequest.getBookId()));
 
-        List<TradeRequest> sendRequests = userRequestSender.get().getFrom();
-        sendRequests.add(tradeRequest);
-        userRequestSender.get().setFrom(sendRequests);
-
-        List<TradeRequest> receiverRequests = userRequestReceiver.get().getTo();
-        receiverRequests.add(tradeRequest);
-        userRequestReceiver.get().setTo(receiverRequests);
+        userRequestSender.get().addFrom(tradeRequest);
+        userRequestReceiver.get().addTo(tradeRequest);
 
         updateUserRequests(userRequestSender);
         updateUserRequests(userRequestReceiver);
@@ -57,23 +52,26 @@ public class TradeRequestDao extends UserRequestDao implements CommandLineRunner
         Optional<UserRequest> userRequestSender = getUserRequests(tradeRequest.get().getUser());
         Optional<UserRequest> userRequestReceiver = getUserRequests(getBookOwnerById(tradeRequest.get().getBookId()));
 
-        List<TradeRequest> sendRequests = userRequestSender.get().getFrom();
-        sendRequests.remove(tradeRequest);
-        userRequestSender.get().setFrom(sendRequests);
-
-        List<TradeRequest> receiverRequests = userRequestReceiver.get().getTo();
-        receiverRequests.remove(tradeRequest);
-        userRequestReceiver.get().setTo(receiverRequests);
+        userRequestSender.get().removeFrom(tradeRequest.get());
+        userRequestReceiver.get().removeTo(tradeRequest.get());
 
         updateUserRequests(userRequestSender);
         updateUserRequests(userRequestReceiver);
     }
 
-    public void acceptTradeRequest() {
-
+    public void acceptTradeRequestById(String id) {
+        TradeRequest tradeRequest = getTradeRequestById(id).get();
+        tradeRequest.setAccepted(true);
+        updateTradeRequest(tradeRequest);
     }
 
-    public void rejectTradeRequest() {
+    public void rejectTradeRequestById(String id) {
+        TradeRequest tradeRequest = getTradeRequestById(id).get();
+        tradeRequest.setRejected(false);
+        updateTradeRequest(tradeRequest);
+    }
 
+    public void updateTradeRequest(TradeRequest tradeRequest) {
+        this.tradeRequestRepository.save(tradeRequest);
     }
 }
