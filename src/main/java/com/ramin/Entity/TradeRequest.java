@@ -22,6 +22,10 @@ public class TradeRequest {
         this.rejected = false;
     }
 
+    public TradeRequest() {
+
+    }
+
     public Boolean getAccepted() {
         return accepted;
     }

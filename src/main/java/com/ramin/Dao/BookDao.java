@@ -20,12 +20,12 @@ public class BookDao implements CommandLineRunner {
 
     @Override
     public void run(String ... args) {
-        //bookRepository.insert(new Book("Java EE","Jessy","stackoverflow.com"));
         System.out.println(bookRepository.findAll().toString());
     }
 
     public void insertBook(Book book) {
-        this.bookRepository.insert(book);
+        Book myBook = new Book(book.getName(),book.getOwner(),book.getUrl());
+        this.bookRepository.insert(myBook);
     }
 
     public Optional<Book> getBookById(String id) {

@@ -25,7 +25,7 @@ public class BookController {
         return this.bookDao.getAllBooks();
     }
 
-    @RequestMapping(method = RequestMethod.GET , value = "/{id}")
+    @RequestMapping(method = RequestMethod.GET , value = "/id/{id}")
     public Optional<Book> getBookById(@PathVariable("id") String id) {
         return this.bookDao.getBookById(id);
     }
@@ -50,5 +50,10 @@ public class BookController {
     @RequestMapping(value="/trade/id", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void tradeBook(@RequestBody Map<String,String>body) {
         this.bookDao.tradeBook(body.get("id"),body.get("borrower"));
+    }
+
+    @RequestMapping(value="/addBook", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void insertBook(@RequestBody Book book) {
+        this.bookDao.insertBook(book);
     }
 }
