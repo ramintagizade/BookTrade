@@ -29,10 +29,12 @@ public class TradeRequestDao extends UserRequestDao implements CommandLineRunner
     }
 
     public void insertTradeRequest(TradeRequest tradeRequest) {
+        tradeRequest = new TradeRequest(tradeRequest.getUser(),tradeRequest.getBookId());
         this.tradeRequestRepository.insert(tradeRequest);
 
         Optional<UserRequest> userRequestSender = getUserRequests(tradeRequest.getUser());
         Optional<UserRequest> userRequestReceiver = getUserRequests(getBookOwnerById(tradeRequest.getBookId()));
+
 
         userRequestSender.get().addFrom(tradeRequest);
         userRequestReceiver.get().addTo(tradeRequest);
