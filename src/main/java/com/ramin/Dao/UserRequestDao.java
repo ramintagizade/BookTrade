@@ -23,8 +23,8 @@ public class UserRequestDao implements CommandLineRunner {
         return this.userRequestRepository.findById(email);
     }
 
-    public void updateUserRequests(Optional<UserRequest> userRequest) {
-        this.userRequestRepository.save(userRequest.get());
+    public void updateUserRequests(UserRequest userRequest) {
+        this.userRequestRepository.save(userRequest);
     }
 
 

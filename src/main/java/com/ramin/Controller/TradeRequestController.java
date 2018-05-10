@@ -26,6 +26,7 @@ public class TradeRequestController {
 
     @RequestMapping(value="/delTradeReq", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void removeTradeRequest(@RequestBody Map<String,String>body) {
+        System.out.println("remove id  " + body.get("id"));
         this.tradeRequestDao.removeTradeRequestById(body.get("id"));
     }
 

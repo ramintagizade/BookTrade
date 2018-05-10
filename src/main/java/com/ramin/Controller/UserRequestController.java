@@ -22,4 +22,8 @@ public class UserRequestController {
         this.userRequestDao.getUserRequests(body.get("email"));
     }
 
+    //@RequestMapping(value = "/rejTradeReq", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    //public void getUserTradeRequests(@RequestBody Map<String,String> body) {
+    //    this.userRequestDao.getUserRequests(body.get("email"));
+    //}
 }

@@ -65,4 +65,8 @@ public class TradeRequest {
     public void setBookId(String bookId) {
         this.bookId = bookId;
     }
+
+    public String toString() {
+        return "[ " +this.user + ", " + this.bookId+", " +this.id +" ]";
+    }
 }
