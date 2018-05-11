@@ -83,11 +83,21 @@ public class TradeRequestDao extends UserRequestDao implements CommandLineRunner
 
     public void rejectTradeRequestById(String id) {
         TradeRequest tradeRequest = getTradeRequestById(id).get();
-        tradeRequest.setRejected(false);
+        tradeRequest.setRejected(true);
         updateTradeRequest(tradeRequest);
     }
 
     public void updateTradeRequest(TradeRequest tradeRequest) {
         this.tradeRequestRepository.save(tradeRequest);
+
+        Optional <UserRequest> userRequestSender = getUserRequests(tradeRequest.getUser());
+        Optional <UserRequest> userRequestReceiver = getUserRequests(getBookOwnerById(tradeRequest.getBookId()));
+
+        userRequestSender.get().updateTradeFrom(tradeRequest);
+        userRequestReceiver.get().updateTradeTo(tradeRequest);
+
+
+        updateUserRequests(userRequestSender.get());
+        updateUserRequests(userRequestReceiver.get());
     }
 }

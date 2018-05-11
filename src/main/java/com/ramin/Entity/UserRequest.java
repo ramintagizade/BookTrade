@@ -79,6 +79,31 @@ public class UserRequest {
         }
     }
 
+    public void updateTradeFrom(TradeRequest tradeRequest) {
+        Iterator<TradeRequest> i = this.from.iterator();
+        while(i.hasNext()) {
+            TradeRequest o = i.next();
+            if(o.getBookId().equals(tradeRequest.getBookId())) {
+                o.setAccepted(tradeRequest.getAccepted());
+                o.setRejected(tradeRequest.getRejected());
+                break;
+            }
+        }
+    }
+
+    public void updateTradeTo(TradeRequest tradeRequest) {
+        Iterator<TradeRequest> i = this.to.iterator();
+        while(i.hasNext()) {
+            TradeRequest o = i.next();
+            if(o.getBookId().equals(tradeRequest.getBookId())) {
+                o.setAccepted(tradeRequest.getAccepted());
+                o.setRejected(tradeRequest.getRejected());
+                break;
+            }
+        }
+    }
+
+
     public String toString() {
         return "[" + this.id + ", from: " + this.from + ", to : " + this.to + "]";
     }

@@ -67,6 +67,6 @@ public class TradeRequest {
     }
 
     public String toString() {
-        return "[ " +this.user + ", " + this.bookId+", " +this.id +" ]";
+        return "[ " +this.user + ", " + this.bookId+", " +this.accepted +", "+ ", "+ this.rejected+ ", " +this.id +" ]";
     }
 }
