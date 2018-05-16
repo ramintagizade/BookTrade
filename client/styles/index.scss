@@ -1,0 +1,20 @@
+body {
+	overflow-x: hidden;
+}
+html {
+	 //background-image: url(./book.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.navbar-brand {
+	color:white;
+}
+.navbar-auth {
+	margin-right: 20px;
+	margin-top: 10px;
+}
+.navbar-auth a {
+	margin-left: 5px;
+}

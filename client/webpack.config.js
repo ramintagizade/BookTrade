@@ -16,7 +16,16 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader']
-      }
+      },
+      // Load images.
+      {
+        test: /\.(gif|jpe?g|png)$/,
+        loader: 'url-loader?limit=25000',
+        query: {
+          limit: 10000,
+          name: 'static/media/images/[name].[hash:8].[ext]'
+        }
+      },
 
     ]
   },

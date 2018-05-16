@@ -1,0 +1,1 @@
+import {combineReducers} from 'redux';import {fake} from "./index";const rootReducer = combineReducers({	fake});export default rootReducer;
