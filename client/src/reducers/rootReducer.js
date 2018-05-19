@@ -1,1 +1,1 @@
-import {combineReducers} from 'redux';import {fake} from "./index";const rootReducer = combineReducers({	fake});export default rootReducer;
+import {combineReducers} from 'redux';import {auth} from "./auth";const rootReducer = combineReducers({	auth});export default rootReducer;

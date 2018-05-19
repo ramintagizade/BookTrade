@@ -37,9 +37,9 @@ class Login extends React.Component {
 			email:email,
 			password:password
 		};
-		
-		//if(email && password)
-    		//dispatch(userActions.login(user.email,user.password));
+
+		if(email && password)
+    		dispatch(userActions.login(user.email,user.password));
 	}
 
 

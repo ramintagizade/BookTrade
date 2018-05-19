@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {userActions} from './../actions/index';
 
 class Register extends React.Component {
 
@@ -41,8 +42,8 @@ class Register extends React.Component {
 			password:password
 		};
 
-		//if(user.username && user.email && user.password)
-    		//dispatch(userActions.register(user.username,user.email,user.password));
+		if(user.username && user.email && user.password)
+    		dispatch(userActions.register(user.username,user.email,user.password));
 	}
 
 	render() {
