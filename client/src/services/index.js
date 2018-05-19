@@ -14,7 +14,7 @@ function login(email, password) {
 		body:JSON.stringify({email,password})
 	}; 
 
-	return fetch('/login', opts).then(res => {
+	return fetch('http://localhost:8080/auth/login', opts).then(res => {
 		if(!res.ok) {
 			return Promise.reject(res.statusText)
 		}
@@ -34,7 +34,7 @@ function register(username, email, password) {
 		body:JSON.stringify({username, email, password})
 	};
 
-	return fetch('/register', opts).then(res => {
+	return fetch('http://localhost:8080/auth/register', opts).then(res => {
 		if(!res.ok) {
 			return Promise.reject(res.statusText)
 		}

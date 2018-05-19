@@ -75,10 +75,10 @@ class Register extends React.Component {
 				  		<div className="alert-block"> Password is required </div>
 				  	}
 				  </div>
-				   {
+				   {/*
 				  	submitted && alert.type==="alert-error" && 
 				  	<div className="alert-block"> {alert.message.message} </div>
-				  	}
+				  	*/}
 				  <button type="submit" className="btn btn-primary">Submit</button>
 				</form>
 			</div>
