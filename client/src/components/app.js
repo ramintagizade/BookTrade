@@ -1,5 +1,10 @@
 import React from 'react';
 require("../../styles/index.scss");
+import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
+import { Switch, Redirect,browserHistory } from 'react-router';
+import Login from './login';
+import Register from './register';
+
 
 class TradeBook extends React.Component {
 	constructor(props) {
@@ -34,7 +39,15 @@ class TradeBook extends React.Component {
 				</div>
 			  </nav>
 			 </div>
-			 
+			  <HashRouter >
+		    	<div>
+		        	<Switch>		
+		          		<Route exact path="/login" component={ Login} />
+		          		<Route exact path="/register" component={ Register} />		
+		        	</Switch>
+		    	</div>
+		  	</HashRouter>
+			  
 			</div>
 		);
 	}

@@ -2,7 +2,6 @@ body {
 	overflow-x: hidden;
 }
 html {
-	 //background-image: url(./book.jpeg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -17,4 +16,16 @@ html {
 }
 .navbar-auth a {
 	margin-left: 5px;
+}
+.register-body , .login-body {
+	margin-left: auto;
+	margin-right: auto;
+	width: 60%;
+	height: 100%;
+}
+.home {
+	margin-top: -19px;
+	background: #546777;
+	height: 200px;
+	color:white;
 }
