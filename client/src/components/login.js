@@ -1,5 +1,6 @@
 import React from 'react';
-
+import {connect} from 'react-redux';
+import {userActions} from './../actions/index';
 
 class Login extends React.Component {
 	
@@ -13,10 +14,37 @@ class Login extends React.Component {
 			alert:""
 		}
 
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+
+	}
+
+	handleChange(e) {
+		const {name, value} = e.target;
+		this.setState({
+			[name]:value
+		});
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+		const {email,password} = this.state;
+		const {dispatch,auth}  = this.props;
+		this.setState({
+			submitted:true
+		});
+		const user = {
+			email:email,
+			password:password
+		};
+		
+		//if(email && password)
+    		//dispatch(userActions.login(user.email,user.password));
 	}
 
 
 	render() {
+
 		const {submitted,password,email} = this.state;
 		const {alert} = this.props;
 
@@ -50,5 +78,14 @@ class Login extends React.Component {
  
 }
 
+function mapStateToProps(state) {
+	const {auth,alert}   =  state;
+	return {
+		auth,
+		alert
+	}
+}
+
+Login = connect(mapStateToProps)(Login);
 
 export default Login;

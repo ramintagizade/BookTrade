@@ -1,17 +1,50 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 class Register extends React.Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			username:"",
 			email:"",
 			password:"",
-			submitted:""
+			submitted:false
 		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	
+
+	handleChange(e) {
+		const {name,value} = e.target;
+
+		this.setState({
+			[name]:value
+		});
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+
+		const {username, email, password} = this.state;
+		const {dispatch,register}  = this.props;
+
+		this.setState({
+			submitted:true
+		});
+
+		const user = {
+			username:username,
+			email:email,
+			password:password
+		};
+
+		//if(user.username && user.email && user.password)
+    		//dispatch(userActions.register(user.username,user.email,user.password));
+	}
+
 	render() {
 
 		const {username,email,password,submitted } = this.state;
@@ -51,5 +84,18 @@ class Register extends React.Component {
 		);
 	}
 }
+
+function mapStateToProps(state) {
+
+	const {register,alert,auth}   =  state;
+
+	return {
+		register,
+		alert,
+		auth
+	}
+}
+
+Register = connect(mapStateToProps)(Register);
 
 export default Register;
