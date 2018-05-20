@@ -8,14 +8,24 @@ public class User {
     @Id
     private String id;
     private String password;
+    private String username;
 
-    public User(String email, String password) {
+    public User(String username, String email, String password) {
         this.id = email;
         this.password = password;
+        this.username = username;
     }
 
     public User() {
 
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getId() {

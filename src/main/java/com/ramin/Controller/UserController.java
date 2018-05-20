@@ -1,41 +1,62 @@
 package com.ramin.Controller;
 
+import com.ramin.Dao.TokenDao;
 import com.ramin.Dao.UserDao;
 import com.ramin.Entity.User;
 import com.ramin.Entity.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.impl.crypto.MacProvider;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
+import java.security.Key;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = { "http://localhost:3000" }, maxAge = 3000)
 @RequestMapping("/auth")
 public class UserController {
 
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    TokenDao tokenDao;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity login(@RequestBody Map<String ,String > body) {
+    public Map<String,String> login( @RequestBody Map<String ,String > body ) {
 
         String email = body.get("email");
         String password = body.get("password");
 
         String passwordDB = getPasswordDB(email);
 
+        String key = this.tokenDao.getToken().get().getToken();
+
+        String compactJws = Jwts.builder()
+                .setSubject("Joe")
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+
+        body.remove("password");
+
+
         if(BCrypt.checkpw(password, passwordDB)) {
-            return new ResponseEntity(HttpStatus.OK);
+            body.put("token",compactJws);
+            return body;
         }
         else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return body;
         }
     }
 
@@ -44,15 +65,48 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register" , method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void register(@RequestBody Map<String,String> body) {
+    public Map<String ,String> register(@RequestBody Map<String,String> body) {
 
+        String username = body.get("username");
         String email = body.get("email");
         String password = body.get("password");
 
+        body.remove("username");
+        body.remove("password");
+
         String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
-        User user = new User(email,hashed);
+        User user = new User(username,email,hashed);
+        System.out.println("register " + username + " " + email + " " + password );
 
-        this.userDao.registerUser(user);
+
+        //Key key = MacProvider.generateKey();
+        String key = this.tokenDao.getToken().get().getToken();
+
+        String compactJws = Jwts.builder()
+                .setSubject(username)
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+
+        try {
+            // success
+            Jwts.parser().setSigningKey(key).parseClaimsJws(compactJws);
+
+            System.out.println("jwt success");
+
+        } catch (SignatureException e) {
+            // error
+            System.out.println("jwt error " + e);
+        }
+
+        boolean ok = this.userDao.registerUser(user);
+
+        if(ok) {
+            body.put("token",compactJws);
+            return body;
+        }
+        else {
+            return body;
+        }
     }
 }

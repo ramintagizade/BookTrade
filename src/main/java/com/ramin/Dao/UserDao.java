@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class UserDao implements CommandLineRunner {
 
@@ -21,8 +23,17 @@ public class UserDao implements CommandLineRunner {
         return this.userRepository.findById(id).get().getPassword();
     }
 
-    public void registerUser(User user) {
-        this.userRepository.save(user);
+    public boolean registerUser(User user) {
+        if(!findUserById(user.getId()).isPresent()){
+            this.userRepository.save(user);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
+    public Optional<User> findUserById(String id) {
+        return this.userRepository.findById(id);
+    }
 }

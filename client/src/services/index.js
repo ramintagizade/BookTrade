@@ -38,8 +38,10 @@ function register(username, email, password) {
 		if(!res.ok) {
 			return Promise.reject(res.statusText)
 		}
+		console.log("user " +JSON.stringify(res));
 		return res.json(); 
 	}).then( user => {
+		console.log("user " + JSON.stringify(user));
 		if(user && user.token) {
 			localStorage.setItem('user', JSON.stringify({token:user.token,email:user.email}));
 		}
