@@ -25,7 +25,33 @@ html {
 }
 .home {
 	margin-top: -19px;
-	background: #546777;
+	background: hsla(75, 16%, 41%, 0.97);
 	height: 200px;
 	color:white;
+}
+.main p {
+	margin-bottom: auto;
+	margin-top: auto;
+}
+.features {
+	position: absolute;
+	margin-top: 13%;
+	height:calc(100% - (220px));
+	width:100%;
+	background: #76775482;
+	color: black;
+}
+.features strong  {
+	position: absolute;
+	margin-left: 20px;
+	padding-top: 20px;
+}
+.features-list {
+	margin-top: 50px;
+	color:blue;
+	width:400px;
+	border: 1px solid gray;
+	height: 30px;
+	float: left;
+	margin-left: 20px;
 }

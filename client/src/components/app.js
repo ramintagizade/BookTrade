@@ -5,7 +5,7 @@ import { Switch, Redirect,browserHistory } from 'react-router';
 import Login from './login';
 import Register from './register';
 import Logout from './logout';
-
+import Home from './home';
 
 class TradeBook extends React.Component {
 	constructor(props) {
@@ -43,6 +43,7 @@ class TradeBook extends React.Component {
 			  <HashRouter >
 		    	<div>
 		        	<Switch>		
+		        		<Route exact path="/" component={Home} />
 		          		<Route exact path="/login" component={ Login} />
 		          		<Route exact path="/register" component={ Register} />
 		          		<Route exact path="/logout" component={Logout} />		
