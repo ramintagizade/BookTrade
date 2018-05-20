@@ -20,6 +20,6 @@ public class TokenDao implements CommandLineRunner {
     }
 
     public Optional<Token> getToken() {
-        return this.tokenRepository.findById("javax.crypto.spec.SecretKeySpec@5881e8b");
+        return this.tokenRepository.findById("token");
     }
 }

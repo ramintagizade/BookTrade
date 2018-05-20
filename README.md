@@ -7,6 +7,7 @@
 ### Install dependencies
 
 <code> cd client </code>
+
 <code> npm install </code>
 
 ### Start MongoDB daemon
@@ -16,6 +17,7 @@
 ### Start the Server 
 
 <code> start apache tomcat </code>
+
 <code> npm run dev-server </code>
 
 

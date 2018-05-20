@@ -4,6 +4,7 @@ import { BrowserRouter as HashRouter, Route, Link } from 'react-router-dom';
 import { Switch, Redirect,browserHistory } from 'react-router';
 import Login from './login';
 import Register from './register';
+import Logout from './logout';
 
 
 class TradeBook extends React.Component {
@@ -16,7 +17,7 @@ class TradeBook extends React.Component {
 	}
 
 	render() {
-		const signed = this.state.signed;
+		const signed = localStorage.getItem("user");
 
 		return (
 			<div>
@@ -43,7 +44,8 @@ class TradeBook extends React.Component {
 		    	<div>
 		        	<Switch>		
 		          		<Route exact path="/login" component={ Login} />
-		          		<Route exact path="/register" component={ Register} />		
+		          		<Route exact path="/register" component={ Register} />
+		          		<Route exact path="/logout" component={Logout} />		
 		        	</Switch>
 		    	</div>
 		  	</HashRouter>
