@@ -33,6 +33,16 @@ public class UserDao implements CommandLineRunner {
         }
     }
 
+    public boolean updateUser (User user) {
+        if(findUserById(user.getId()).isPresent()) {
+            this.userRepository.save(user);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public Optional<User> findUserById(String id) {
         return this.userRepository.findById(id);
     }

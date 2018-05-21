@@ -7,7 +7,8 @@ const history = createBrowserHistory();
 export const userActions = {
 	login,
 	register,
-	logout
+	logout,
+	updateSettings
 }
 
 function login(email,password) {
@@ -98,4 +99,46 @@ function logout() {
 	return {
 		type:"LOGOUT"
 	};
+}
+
+function updateSettings(username, email,password,newPassword) {
+
+	return dispatch => {
+		dispatch(request(email));
+		userService.updateSettings(username,email,password,newPassword).then(
+			user =>  {
+				if(user.token) {
+					dispatch(success(user));
+					dispatch(alert.success("Successfully updated settings"));
+					// redirect to home page 
+					history.push("/");
+					window.location.reload();
+					
+				}
+				else {
+					dispatch(failure(user));
+					dispatch(alert.error(user));
+				}
+			}
+		);
+	};
+
+	function request(user) {
+		return {
+			type:"SETTINGS_REQUEST",
+			user
+		};
+	}
+	function success(user) {
+		return {
+			type : "SETTINGS_SUCCESS",
+			user
+		};
+	}
+	function failure(error) {
+		return {
+			type: "SETTINGS_FAILURE",
+			error
+		};
+	}
 }

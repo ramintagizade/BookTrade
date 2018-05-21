@@ -6,6 +6,7 @@ import Login from './login';
 import Register from './register';
 import Logout from './logout';
 import Home from './home';
+import Settings from './settings';
 
 class TradeBook extends React.Component {
 	constructor(props) {
@@ -35,7 +36,12 @@ class TradeBook extends React.Component {
   				 		<a className="navbar-right btn btn-default" href="/login"> Sign In </a>
   				 	}
   				 	{	signed && 
-  				 		<a className="navbar-right btn btn-default" href="/logout"> Sign out </a>
+  				 		<a className="navbar-right navbar- btn btn-default" href="/logout"> Sign out </a>
+  				 	}
+  				 	{  	signed && 
+  				 		<a href="#" className="navbar-right btn btn-info btn-md" href="/settings">
+          					<span className="glyphicon glyphicon-cog"></span> 
+        				</a>
   				 	}
 				</div>
 			  </nav>
@@ -46,7 +52,8 @@ class TradeBook extends React.Component {
 		        		<Route exact path="/" component={Home} />
 		          		<Route exact path="/login" component={ Login} />
 		          		<Route exact path="/register" component={ Register} />
-		          		<Route exact path="/logout" component={Logout} />		
+		          		<Route exact path="/logout" component={Logout} />
+		          		<Route exact path="/settings" component={Settings} />			
 		        	</Switch>
 		    	</div>
 		  	</HashRouter>

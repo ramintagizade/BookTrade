@@ -109,4 +109,42 @@ public class UserController {
             return body;
         }
     }
+
+    @RequestMapping(value = "/settings" , method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String ,String> settings(@RequestBody Map<String,String> body) {
+
+        String username = body.get("username");
+        String email = body.get("email");
+        String password = body.get("password");
+        String newPassword = body.get("newPassword");
+
+        String hashed = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+        
+
+        User user = new User(username,email,hashed);
+
+        body.remove("username");
+        body.remove("password");
+        body.remove("newPassword");
+
+        System.out.println("settings " + username + " " + email + " " + password + " " + newPassword );
+
+        String key = this.tokenDao.getToken().get().getToken();
+
+        String compactJws = Jwts.builder()
+                .setSubject(username)
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+
+        String passwordDB = getPasswordDB(email);
+
+        if(BCrypt.checkpw(password, passwordDB)) {
+            this.userDao.updateUser(user);
+            body.put("token",compactJws);
+            return  body;
+        }
+        else {
+            return body;
+        }
+    }
 }

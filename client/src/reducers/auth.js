@@ -40,7 +40,24 @@ export function register (state = {}, action ) {
 			return state;
 	}
 }
-
+export function settings (state = {}, action ) {
+	switch(action.type) {
+		case 'SETTINGS_REQUEST' : 
+			return {
+				settingsIn:true,
+				user:action.user
+			};
+		case 'SETTINGS_SUCCESS' : 
+			return {
+				setSettings:true,
+				user:action.user
+			};
+		case 'SETTINGS_FAILURE' : 
+			return {};
+		default :
+			return state;
+	}
+}
 export function alert( state = {} , action ) {
 	switch(action.type) {
 		case 'ALERT.SUCCESS' :
