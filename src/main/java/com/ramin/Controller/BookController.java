@@ -5,8 +5,11 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.ramin.Dao.BookDao;
+import com.ramin.Dao.TokenDao;
 import com.ramin.Entity.Book;
 //import jdk.nashorn.internal.parser.JSONParser;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +23,7 @@ import java.util.*;
 
 
 @RestController
+@CrossOrigin(origins = { "http://localhost:3000" }, maxAge = 3000)
 @RequestMapping("/books")
 public class BookController {
 
@@ -27,6 +31,8 @@ public class BookController {
     private BookDao bookDao;
     @Autowired
     private HttpServletRequest request;
+    @Autowired
+    private TokenDao tokenDao;
 
     @RequestMapping(method = RequestMethod.GET)
     public Collection<Book> getAllBooks() {
@@ -38,9 +44,21 @@ public class BookController {
         return this.bookDao.getBookById(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "myBooks/{owner}")
-    public Collection<Book> getMyBooks(@PathVariable("owner") String owner) {
-        return this.bookDao.getMyBooks(owner);
+    @RequestMapping(method = RequestMethod.POST, value = "myBooks")
+    public Collection<Book> getMyBooks(@RequestBody Map<String ,String > body) {
+
+        String key = this.tokenDao.getToken().get().getToken();
+        try {
+                // success
+                Jwts.parser().setSigningKey(key).parseClaimsJws(getHeaderToken());
+                System.out.println("jwt success");
+                return this.bookDao.getMyBooks(body.get("email"));
+        } catch (SignatureException e) {
+                // error
+            System.out.println("jwt err");
+            return null;
+        }
+
     }
 
     @RequestMapping(value = "/delete/id" ,method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)

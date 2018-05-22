@@ -119,7 +119,7 @@ public class UserController {
         String newPassword = body.get("newPassword");
 
         String hashed = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
-        
+
 
         User user = new User(username,email,hashed);
 

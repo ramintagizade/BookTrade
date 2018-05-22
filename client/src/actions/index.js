@@ -8,7 +8,8 @@ export const userActions = {
 	login,
 	register,
 	logout,
-	updateSettings
+	updateSettings,
+	getMyBooks
 }
 
 function login(email,password) {
@@ -138,6 +139,42 @@ function updateSettings(username, email,password,newPassword) {
 	function failure(error) {
 		return {
 			type: "SETTINGS_FAILURE",
+			error
+		};
+	}
+}
+
+function getMyBooks( email ) {
+
+	return dispatch => {
+		dispatch(request(email));
+		userService.getMyBooks(email).then(
+			user =>  {
+				if(user) {
+					dispatch(success(user));
+				}
+				else {
+					dispatch(failure(user));
+				}
+			}
+		);
+	};
+
+	function request(user) {
+		return {
+			type:"GET_MY_BOOKS_REQUEST",
+			user
+		};
+	}
+	function success(user) {
+		return {
+			type : "GET_MY_BOOKS_SUCCESS",
+			user
+		};
+	}
+	function failure(error) {
+		return {
+			type: "GET_MY_BOOKS_FAILURE",
 			error
 		};
 	}

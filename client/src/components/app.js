@@ -7,6 +7,8 @@ import Register from './register';
 import Logout from './logout';
 import Home from './home';
 import Settings from './settings';
+import AllBooks from './allBooks';
+import MyBooks from './myBooks';
 
 class TradeBook extends React.Component {
 	constructor(props) {
@@ -43,6 +45,12 @@ class TradeBook extends React.Component {
           					<span className="glyphicon glyphicon-cog"></span> 
         				</a>
   				 	}
+  				 	{	signed && 
+  				 		<a className="navbar-right btn btn-default" href="/allBooks"> All Books </a>
+  				 	}{	signed && 
+  				 		<a className="navbar-right btn btn-default" href="/myBooks"> My Books </a>
+  				 	}
+  				 	
 				</div>
 			  </nav>
 			 </div>
@@ -53,7 +61,9 @@ class TradeBook extends React.Component {
 		          		<Route exact path="/login" component={ Login} />
 		          		<Route exact path="/register" component={ Register} />
 		          		<Route exact path="/logout" component={Logout} />
-		          		<Route exact path="/settings" component={Settings} />			
+		          		<Route exact path="/settings" component={Settings} />
+		          		<Route exact path="/allBooks" component={AllBooks} />	
+		          		<Route exact path="/myBooks" component={MyBooks} />				
 		        	</Switch>
 		    	</div>
 		  	</HashRouter>
