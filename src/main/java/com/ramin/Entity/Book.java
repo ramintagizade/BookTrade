@@ -11,11 +11,11 @@ public class Book {
     private String url;
     private String owner;
 
-    public Book(String name, String owner, String url ) {
+    public Book(String name, String owner, String url,String id ) {
         this.name = name;
         this.url = url;
         this.owner = owner;
-        this.id = UUID.randomUUID().toString();
+        this.id = id; //UUID.randomUUID().toString();
     }
     public Book() {
 

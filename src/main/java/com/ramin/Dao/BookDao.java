@@ -24,7 +24,7 @@ public class BookDao implements CommandLineRunner {
     }
 
     public void insertBook(Book book) {
-        Book myBook = new Book(book.getName(),book.getOwner(),book.getUrl());
+        Book myBook = new Book(book.getName(),book.getOwner(),book.getUrl(),book.getId());
         this.bookRepository.insert(myBook);
     }
 

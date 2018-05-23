@@ -1,9 +1,10 @@
 package com.ramin.Controller;
 
+import ch.qos.logback.classic.net.SyslogAppender;
 import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ramin.Dao.BookDao;
 import com.ramin.Dao.TokenDao;
 import com.ramin.Entity.Book;
@@ -11,9 +12,7 @@ import com.ramin.Entity.Book;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -64,10 +63,18 @@ public class BookController {
     @RequestMapping(value = "/delete/id" ,method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void removeBookById(@RequestBody Map<String, String> body){
 
-        if(getHeaderToken().equals(("Bearer secret"))) {
+        String key = this.tokenDao.getToken().get().getToken();
+        try {
+            // success
+            Jwts.parser().setSigningKey(key).parseClaimsJws(getHeaderToken());
+            System.out.println("jwt success");
             this.bookDao.removeBookById(body.get("id"));
+        } catch (SignatureException e) {
+            // error
+            System.out.println("jwt err");
         }
     }
+
     //get request header token
     private String getHeaderToken() {
         return request.getHeader("authorization");
@@ -80,34 +87,36 @@ public class BookController {
 
     @RequestMapping(value="/addBook", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity <JsonValue> insertBook(@RequestBody Map<String,String> body) throws IOException {
+    public Map<String,String > insertBook(@RequestBody Map<String,String> body) throws IOException {
+        System.out.print(body);
+        String name = body.get("name");
+        JsonArray arr =  get("https://www.googleapis.com/books/v1/volumes?q="+name);
+        if(arr==null) return null;
 
-        String query = body.get("bookName");
+        JsonObject book = arr.get(0).asObject();
 
-        JsonArray arr =  get("https://www.googleapis.com/books/v1/volumes?q="+query);
+        String id = book.get("id").asString();
+        String url = book.get("volumeInfo").asObject().get("imageLinks").asObject().get("thumbnail").asString();
 
-        System.out.println(arr.get(0));
+        Map<String ,String > map = new HashMap<String ,String>();
+        Book myBook = new Book(body.get("bookName"),body.get("owner"), new String(url),new String(id));
+        this.bookDao.insertBook(myBook);
 
-        JsonValue value = arr.get(0);
+        map.put("name",name);
+        map.put("owner",body.get("owner"));
+        map.put("url",url);
+        map.put("id",id);
 
-        System.out.println("value " + value);
-
-        JsonArray res = (JsonArray) value;
-        JsonValue res2 = (JsonValue) (res);
-        //System.out.println(res2);
-
-        return new ResponseEntity<JsonValue>(res2, HttpStatus.OK);
+        return map;
     }
 
     private JsonArray get(String query) throws IOException {
         final String uri = "https://www.googleapis.com/books/v1/volumes?q=" + query;
-
         RestTemplate restTemplate = new RestTemplate();
         String result = String.valueOf(restTemplate.getForObject(uri, String.class));
-
         JsonObject value = (JsonObject) Json.parse(result);
-
-        return (JsonArray) value.get("items");
+        if(value==null) return null;
+        return  (JsonArray) value.get("items");
     }
 
 }
