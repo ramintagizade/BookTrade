@@ -7,9 +7,16 @@ class TradeRequest extends React.Component {
 	}
 
 	render () {
-
+		
 		return (
-			<div> Trade Request </div>
+			<div> 
+				<div >  
+					<p className="treqForu"> Trade Requests for you </p>
+				</div>
+				<div > 
+					<p className="treqFromu">Trade Requests from you </p>
+				</div>
+			</div>
 		);
 	}
 }

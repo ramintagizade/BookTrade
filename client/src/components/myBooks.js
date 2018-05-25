@@ -8,6 +8,10 @@ class MyBooks extends React.Component {
 
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			mybooks: []
+		};
 	}
 
 	componentDidMount() {
@@ -16,12 +20,32 @@ class MyBooks extends React.Component {
 		dispatch(userActions.getMyBooks(email));
 	}
 
+	componentDidUpdate(prevProps,prevState) {
+		if(prevProps.getMyBooks!=this.props.getMyBooks && this.props.getMyBooks["gotMyBooks"]) {
+			
+			this.setState({
+				myBooks:this.props.getMyBooks["user"]
+			});
+		}
+	}
+
 	render() {
+		let myBooks;
+		if(this.state.myBooks) {
+			myBooks = this.state.myBooks.map(function (x,i) {
+				console.log("x "  +JSON.stringify(x));
+				console.log("i " + i);
+				return <div className="myBooks-each" key={i}> <img src={x.url}/> </div>;
+			});
+		}
+
 		return (
 			<div > 
 			<TradeRequest/>
-
-			My Books 
+			<br/>
+			<div className="myBooks">	
+				{myBooks}
+			</div>
 
 			</div>
 		);
@@ -29,10 +53,9 @@ class MyBooks extends React.Component {
 }
 
 function mapStateToProps(state) {
-	const {auth,alert}   =  state;
+	const {getMyBooks}   =  state;
 	return {
-		auth,
-		alert
+		getMyBooks
 	}
 }
 

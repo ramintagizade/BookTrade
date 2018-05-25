@@ -99,7 +99,7 @@ public class BookController {
         String url = book.get("volumeInfo").asObject().get("imageLinks").asObject().get("thumbnail").asString();
 
         Map<String ,String > map = new HashMap<String ,String>();
-        Book myBook = new Book(body.get("bookName"),body.get("owner"), new String(url),new String(id));
+        Book myBook = new Book(body.get("name"),body.get("owner"), new String(url),new String(id));
         this.bookDao.insertBook(myBook);
 
         map.put("name",name);
