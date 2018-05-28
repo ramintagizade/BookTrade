@@ -17,3 +17,22 @@ export function getMyBooks (state = {}, action ) {
 			return state;
 	}
 }
+
+export function getAllBooks (state = {}, action ) {
+	switch(action.type) {
+		case 'GET_ALL_BOOKS_REQUEST' : 
+			return {
+				gettingAllBooks:true,
+				book:action.user
+			};
+		case 'GET_ALL_BOOKS_SUCCESS' : 
+			return {
+				gotAllBooks:true,
+				book:action.book
+			};
+		case 'GET_ALL_BOOKS_FAILURE' : 
+			return {};
+		default :
+			return state;
+	}
+}

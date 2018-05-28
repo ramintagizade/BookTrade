@@ -33,9 +33,17 @@ public class BookController {
     @Autowired
     private TokenDao tokenDao;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public Collection<Book> getAllBooks() {
-        return this.bookDao.getAllBooks();
+    @RequestMapping(method = RequestMethod.POST, value = "allBooks")
+    public Collection<Book> getAllBooks(@RequestBody Map<String,String> body) {
+        String key = this.tokenDao.getToken().get().getToken();
+        try {
+            Jwts.parser().setSigningKey(key).parseClaimsJws(getHeaderToken());
+            return this.bookDao.getAllBooks();
+        }
+        catch (SignatureException e) {
+            return null;
+        }
+
     }
 
     @RequestMapping(method = RequestMethod.GET , value = "/id/{id}")

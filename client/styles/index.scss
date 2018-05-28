@@ -74,3 +74,24 @@ html {
 	float: left;
 	margin-left: 5px;
 }
+.allBooks {
+	clear:both;
+}
+.allBooks-each {
+	float: left;
+	margin-left: 5px;
+}
+.logo img {
+	width:30px;
+	height: 30px;
+	margin-top: -320px;
+	cursor: pointer;
+	-webkit-filter: brightness(100%);
+}
+.logo .active  {
+	width:30px;
+	height: 30px;
+	margin-top: -320px;
+	cursor: pointer;
+	-webkit-filter: brightness(50%);
+}

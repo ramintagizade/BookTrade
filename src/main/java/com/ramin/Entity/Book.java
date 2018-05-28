@@ -10,15 +10,25 @@ public class Book {
     private String name;
     private String url;
     private String owner;
+    private boolean requested;
 
     public Book(String name, String owner, String url,String id ) {
         this.name = name;
         this.url = url;
         this.owner = owner;
-        this.id = id; //UUID.randomUUID().toString();
+        this.id = id;
+        this.requested = false;
     }
     public Book() {
 
+    }
+
+    public boolean isRequested() {
+        return requested;
+    }
+
+    public void setRequested(boolean requested) {
+        this.requested = requested;
     }
 
     public String getId() {

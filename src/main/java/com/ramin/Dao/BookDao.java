@@ -43,8 +43,6 @@ public class BookDao implements CommandLineRunner {
     }
 
     public void removeBookById(String id) {
-        // Owner can delete
-        // check if owner has the right
         this.bookRepository.deleteById(id);
     }
 

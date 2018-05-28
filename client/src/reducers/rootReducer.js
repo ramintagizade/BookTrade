@@ -1,1 +1,1 @@
-import {combineReducers} from 'redux';import {auth,settings,register} from "./auth";import {getMyBooks} from './book';const rootReducer = combineReducers({	auth,settings,register,getMyBooks});export default rootReducer;
+import {combineReducers} from 'redux';import {auth,settings,register} from "./auth";import {getMyBooks,getAllBooks} from './book';const rootReducer = combineReducers({	auth,settings,register,getMyBooks,getAllBooks});export default rootReducer;

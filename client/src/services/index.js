@@ -3,8 +3,7 @@ export const userService = {
 	login,
 	logout,
 	register,
-	updateSettings,
-	getMyBooks
+	updateSettings
 };
 
 
@@ -82,26 +81,3 @@ function logout() {
 	window.location.href="/";
 }
 
-function getMyBooks(email) {
-
-	const opts = {
-		method:"POST",
-		headers: new Headers({
-	     'Authorization': token, 
-	     'Content-Type': 'application/json'
-	   	}),
-		body:JSON.stringify({email})
-	};
-
-	return fetch('http://localhost:8080/books/myBooks', opts).then(res => {
-		if(!res.ok) {
-			return Promise.reject(res.statusText)
-		}
-		return res.json(); 
-	}).then( user => {
-		if(user) {
-			console.log("user " + JSON.stringify(user));
-		} 
-		return user;
-	})
-}

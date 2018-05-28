@@ -1,7 +1,7 @@
 import React from 'react';
 import TradeRequest from './tradeRequest';
 import {connect} from 'react-redux';
-import {userActions} from './../actions/index'; 
+import {bookActions} from './../actions/book'; 
 
 
 class MyBooks extends React.Component {
@@ -17,7 +17,7 @@ class MyBooks extends React.Component {
 	componentDidMount() {
 		const {dispatch}  = this.props;
 		const email = JSON.parse(localStorage.getItem("user")).email;
-		dispatch(userActions.getMyBooks(email));
+		dispatch(bookActions.getMyBooks(email));
 	}
 
 	componentDidUpdate(prevProps,prevState) {
